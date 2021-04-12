@@ -66,7 +66,7 @@ $(function() {
         // 那么权限校验的机制也就出来了，需要检验权限的页面后台先判断请求头里面是否有token，以此来判断是否是登录状态
         localStorage.setItem("token", res.token);
         // 跳转到后台
-        location.href = "/index.html";
+        location.href = "/home/index.html";
       }
     })
   })
