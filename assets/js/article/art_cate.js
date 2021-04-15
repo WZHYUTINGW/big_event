@@ -1,6 +1,7 @@
 $(function () {
   initArtCateList()
   const form = layui.form;
+  const layer = layui.layer;
 
   // 获取文章分类的列表
   function initArtCateList() {
@@ -9,7 +10,7 @@ $(function () {
       url: '/my/article/cates',
       success: function (res) {
         if (res.status !== 0) {
-          return layui.layer.msg(res.message);
+          return layer.msg(res.message);
         }
         const htmlStr = template('tpl-table', res)
         $('tbody').html(htmlStr)
@@ -18,7 +19,7 @@ $(function () {
   }
   let indexAdd = null;
   $("#btnAddCate").on('click', function () {
-    indexAdd = layui.layer.open({
+    indexAdd = layer.open({
       type: 1,
       area: ['500px', '250px'],
       title: '添加文章分类',
@@ -34,11 +35,11 @@ $(function () {
       data: $(this).serialize(),
       success: function (res) {
         if (res.status !== 0) {
-          return layui.layer.msg(res.message);
+          return layer.msg(res.message);
         }
-        layui.layer.msg("添加分类成功！");
+        layer.msg("添加分类成功！");
         initArtCateList();
-        layui.layer.close(indexAdd);
+        layer.close(indexAdd);
 
       }
     })
@@ -73,10 +74,10 @@ $(function () {
       data: $(this).serialize(),
       success: function (res) {
         if(res.status !== 0) {
-          return layui.layer.msg(res.message);
+          return layer.msg(res.message);
         }
-        layui.layer.msg("修改类别数据成功！");
-        layui.layer.close(indexEdit);
+        layer.msg("修改类别数据成功！");
+        layer.close(indexEdit);
         initArtCateList()
       }
     })
@@ -85,16 +86,16 @@ $(function () {
   // 通过代理的形式，为btn-edit添加点击事件
   $("tbody").on("click", ".btn-del", function() {
     const id = $(this).attr("data-id");
-    layui.layer.confirm("确认删除？", {icon: 3, title: "提示"}, function (index) {
+    layer.confirm("确认删除？", {icon: 3, title: "提示"}, function (index) {
       $.ajax({
         method: "GET",
         url: "/my/article/deletecate/" + id,
         success: function(res) {
           if (res.status !== 0) {
-            return layui.layer.msg(res.message);
+            return layer.msg(res.message);
           }
-          layui.layer.msg("删除数据成功！");
-          layui.layer.close(index);
+          layer.msg("删除数据成功！");
+          layer.close(index);
           initArtCateList()
         }
       })
